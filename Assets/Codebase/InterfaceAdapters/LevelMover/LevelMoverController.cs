@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Codebase.InterfaceAdapters.LevelBuilder;
+﻿using Codebase.InterfaceAdapters.LevelBuilder;
 using Codebase.Utilities;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -11,13 +10,13 @@ namespace Codebase.InterfaceAdapters.LevelMover
     {
         private bool _isAlive = true;
         private readonly bool _worldIsMoving;
+        private readonly ILevelBuilder _levelBuilder;
         private Transform _lastPlatform;
-        private readonly Queue<Transform> _platformsToMove = new();
 
         public LevelMoverController(ILevelBuilder levelBuilder)
         {
-            levelBuilder.LastSpawnedPlatform.Subscribe(AddPlatform).AddTo(_disposables);
-            levelBuilder.DeletePlatform.Subscribe(RemovePlatform).AddTo(_disposables);
+            _levelBuilder = levelBuilder;
+            _levelBuilder.LastSpawnedPlatform.Subscribe(AddPlatform).AddTo(_disposables);
             _worldIsMoving = true;
             WorldMover();
         }
@@ -25,7 +24,6 @@ namespace Codebase.InterfaceAdapters.LevelMover
         private void AddPlatform(Transform platform)
         {
             if(platform == null)return;
-            _platformsToMove.Enqueue(platform);
             if (_lastPlatform == null)
                 _lastPlatform = platform;
             else
@@ -35,11 +33,7 @@ namespace Codebase.InterfaceAdapters.LevelMover
                 _lastPlatform = platform;
             }
         }
-
-        private void RemovePlatform()
-        {
-            _platformsToMove.Dequeue();
-        }
+        
 
         private async void WorldMover()
         {
@@ -47,9 +41,9 @@ namespace Codebase.InterfaceAdapters.LevelMover
             {
                 if (_worldIsMoving)
                 {
-                    foreach (var transform in _platformsToMove)
+                    foreach (var transform in _levelBuilder.PlatformsToMove)
                     {
-                        transform.Translate(-Vector3.right * Time.deltaTime * 3);
+                        transform.Translate(-Vector3.right * Time.deltaTime * 6);
                     }
                 }
                 await UniTask.Yield();

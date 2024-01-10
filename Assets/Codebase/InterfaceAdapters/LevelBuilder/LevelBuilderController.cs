@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Codebase.Utilities;
+using Cysharp.Threading.Tasks;
 using External.Reactive;
 using UniRx;
 using UnityEngine;
@@ -9,28 +10,23 @@ namespace Codebase.InterfaceAdapters.LevelBuilder
 {
     public class LevelBuilderController : DisposableBase, ILevelBuilder
     {
+        public Queue<Transform> PlatformsToMove { get; set; }
         public ReactiveProperty<Transform> LastSpawnedPlatform { get; set; }
-        public ReactiveTrigger DeletePlatform { get; set; }
+        public ReactiveTrigger RemoveScene { get; set; }
+        
         private readonly Queue<Scene> _loadedScenesIndexes = new();
+        private bool _isAlive = true;
 
         protected LevelBuilderController()
         {
+            PlatformsToMove = new Queue<Transform>();
             LastSpawnedPlatform = new ReactiveProperty<Transform>();
-            DeletePlatform = new ReactiveTrigger();
+            RemoveScene = new ReactiveTrigger();
+  
             SceneManager.sceneLoaded += OnSceneLoaded;
+            
             LoadScene();
-            
-            Observable.EveryUpdate() 
-                .Where(_ => Input.GetKeyDown(KeyCode.Space)) 
-                .Subscribe (x => { 
-                    LoadScene(); 
-                }).AddTo (_disposables);
-            
-            Observable.EveryUpdate() 
-                .Where(_ => Input.GetKeyDown(KeyCode.Z)) 
-                .Subscribe (x => { 
-                    UnLoadScene(); 
-                }).AddTo (_disposables);
+            CheckLastPlatformDistance();
         }
         
         private static void LoadScene()
@@ -43,14 +39,38 @@ namespace Codebase.InterfaceAdapters.LevelBuilder
         {
             if(scene.buildIndex == 0) return;
             _loadedScenesIndexes.Enqueue(scene);
-            LastSpawnedPlatform.Value = scene.GetRootGameObjects()[0].transform;
-        }
-
-        private void UnLoadScene()
-        {
-            DeletePlatform.Notify();
-            SceneManager.UnloadSceneAsync(_loadedScenesIndexes.Dequeue());
+            var sceneRootObject = scene.GetRootGameObjects()[0].transform;
+            PlatformsToMove.Enqueue(sceneRootObject);
+            LastSpawnedPlatform.Value = sceneRootObject;
+            CheckSceneToUnload();
         }
         
+        private void CheckSceneToUnload()
+        {
+            if(PlatformsToMove.Count < 4)
+                return;
+            PlatformsToMove.Dequeue();
+            SceneManager.UnloadSceneAsync(_loadedScenesIndexes.Dequeue());
+        }
+
+        private async void CheckLastPlatformDistance()
+        {
+            while (_isAlive)
+            {
+                if (LastSpawnedPlatform.Value != null)
+                {
+                    if (LastSpawnedPlatform.Value.position.x - LastSpawnedPlatform.Value.localScale.x / 2 <
+                        LastSpawnedPlatform.Value.localScale.x / 4)
+                        LoadScene();
+                }
+                await UniTask.Delay(1000);
+            }
+        }
+
+        protected override void OnDispose()
+        {
+            base.OnDispose();
+            _isAlive = false;
+        }
     }
 }
