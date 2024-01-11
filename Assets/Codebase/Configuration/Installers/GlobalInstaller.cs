@@ -1,5 +1,6 @@
 using Codebase.InterfaceAdapters.LevelBuilder;
 using Codebase.InterfaceAdapters.LevelMover;
+using Codebase.InterfaceAdapters.TriggerListener;
 using Zenject;
 
 namespace Codebase.Configuration.Installers
@@ -10,6 +11,7 @@ namespace Codebase.Configuration.Installers
         {
             InjectLevelBuilder();
             InjectLevelMover();
+            InjectTriggerListener();
         }
         
         private void InjectLevelBuilder()
@@ -22,6 +24,13 @@ namespace Codebase.Configuration.Installers
         private void InjectLevelMover()
         {
             Container.BindInterfacesAndSelfTo<LevelMoverController>()
+                .AsSingle()
+                .NonLazy();
+        }
+        
+        private void InjectTriggerListener()
+        {
+            Container.BindInterfacesAndSelfTo<TriggerListenerController>()
                 .AsSingle()
                 .NonLazy();
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Codebase.InterfaceAdapters.Triggers;
 using Codebase.Utilities;
 using Cysharp.Threading.Tasks;
 using External.Reactive;
@@ -8,20 +9,23 @@ using UnityEngine.SceneManagement;
 
 namespace Codebase.InterfaceAdapters.LevelBuilder
 {
-    public class LevelBuilderController : DisposableBase, ILevelBuilder
+    public class LevelBuilderController : DisposableBase, ILevelBuilder, ITriggerListener
     {
         public Queue<Transform> PlatformsToMove { get; set; }
         public ReactiveProperty<Transform> LastSpawnedPlatform { get; set; }
-        public ReactiveTrigger RemoveScene { get; set; }
         
-        private readonly Queue<Scene> _loadedScenesIndexes = new();
+        public ReactiveEvent<ISceneTrigger[]> triggersToSubscribe { get; set; }
+        public ReactiveEvent<ISceneTrigger[]> triggersToUnSubscribe { get; set; }
+        
+        private readonly Queue<SceneSet> _loadedSceneSets = new();
         private bool _isAlive = true;
 
         protected LevelBuilderController()
         {
             PlatformsToMove = new Queue<Transform>();
             LastSpawnedPlatform = new ReactiveProperty<Transform>();
-            RemoveScene = new ReactiveTrigger();
+            triggersToSubscribe = new ReactiveEvent<ISceneTrigger[]>();
+            triggersToUnSubscribe = new ReactiveEvent<ISceneTrigger[]>();
   
             SceneManager.sceneLoaded += OnSceneLoaded;
             
@@ -38,10 +42,18 @@ namespace Codebase.InterfaceAdapters.LevelBuilder
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             if(scene.buildIndex == 0) return;
-            _loadedScenesIndexes.Enqueue(scene);
             var sceneRootObject = scene.GetRootGameObjects()[0].transform;
+            var triggers = sceneRootObject.GetComponentsInChildren<ISceneTrigger>();
+
+            _loadedSceneSets.Enqueue(new SceneSet()
+            {
+                scene = scene,
+                Triggers = triggers
+            });
+            
             PlatformsToMove.Enqueue(sceneRootObject);
             LastSpawnedPlatform.Value = sceneRootObject;
+            triggersToSubscribe.Notify(triggers);
             CheckSceneToUnload();
         }
         
@@ -50,7 +62,9 @@ namespace Codebase.InterfaceAdapters.LevelBuilder
             if(PlatformsToMove.Count < 4)
                 return;
             PlatformsToMove.Dequeue();
-            SceneManager.UnloadSceneAsync(_loadedScenesIndexes.Dequeue());
+            var sceneSet = _loadedSceneSets.Dequeue();
+            triggersToUnSubscribe.Notify(sceneSet.Triggers);
+            SceneManager.UnloadSceneAsync(sceneSet.scene);
         }
 
         private async void CheckLastPlatformDistance()
@@ -72,5 +86,7 @@ namespace Codebase.InterfaceAdapters.LevelBuilder
             base.OnDispose();
             _isAlive = false;
         }
+
+       
     }
 }
