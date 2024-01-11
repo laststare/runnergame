@@ -1,16 +1,20 @@
 ﻿using Codebase.InterfaceAdapters.LevelBuilder;
 using Codebase.InterfaceAdapters.Triggers;
 using Codebase.Utilities;
+using External.Reactive;
 using UniRx;
-using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.TriggerListener
 {
-    public class TriggerListenerController : DisposableBase
+    public class TriggerListenerController : DisposableBase, ITriggerReaction
     {
-        
+        public ReactiveEvent<TriggerType> TriggerReaction { get; set; }
+        public TriggerType ActualTrigger { get; set; }
+
         public TriggerListenerController(ITriggerListener triggerListener)
         {
+            TriggerReaction = new ReactiveEvent<TriggerType>();
+            ActualTrigger = TriggerType.None;
             triggerListener.triggersToSubscribe.SubscribeWithSkip(SubsToTriggers).AddTo(_disposables);
             triggerListener.triggersToUnSubscribe.SubscribeWithSkip(UnSubsToTriggers).AddTo(_disposables);
         }
@@ -27,9 +31,6 @@ namespace Codebase.InterfaceAdapters.TriggerListener
                 trigger.OnTriggerAction -= ListenToTrigger;
         }
 
-        private void ListenToTrigger(TriggerType triggerType)
-        {
-            Debug.Log(triggerType.ToString());
-        }
+        private void ListenToTrigger(TriggerType triggerType) => TriggerReaction.Notify(triggerType);
     }
 }

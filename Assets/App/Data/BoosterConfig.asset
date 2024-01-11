@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a7890fb1d0c459ebdb71245abae27f3, type: 3}
-  m_Name: SceneConfig
+  m_Script: {fileID: 11500000, guid: a31a6b8c541247f7ab2b7c1788be6850, type: 3}
+  m_Name: BoosterConfig
   m_EditorClassIdentifier: 
-  scenes:
-  - m_Handle: 0
-  - m_Handle: 0
-  - m_Handle: 0
-  - m_Handle: 0
+  defaultEffectDuration: 10
+  speedUpMultiplier: 1.3
+  slowDownMultiplier: 1.3

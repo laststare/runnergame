@@ -16,4 +16,5 @@ MonoBehaviour:
     scenePrefs:
       runner: {fileID: 5634223988809112508, guid: d3a595a608938c54db27895502e7d73f, type: 3}
     settings:
-      sceneConfig: {fileID: 0}
+      worldConfig: {fileID: 11400000, guid: b5cc70821bfaaee45ad08cd3047c0a27, type: 2}
+      boosterConfig: {fileID: 11400000, guid: e499f5a9e541d4e4795f7a13bda55e85, type: 2}

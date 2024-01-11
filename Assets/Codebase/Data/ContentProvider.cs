@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Codebase.Data
 {
@@ -12,7 +11,10 @@ namespace Codebase.Data
         [SerializeField] private Settings settings;
         
         public Transform GetRunner() => scenePrefs.runner;
-        public Scene GetRandomScene() => settings.sceneConfig.GetRandomScene();
+        public float GetDefaultWorldSpeed() => settings.worldConfig.GetDefaultWorldSpeed;
+        public float GetDefaultEffectDuration() => settings.boosterConfig.GetDefaultEffectDuration;
+        public float GetSpeedUpMultiplier() => settings.boosterConfig.GetSpeedUpMultiplier;
+        public float GetSlowDownMultiplier() => settings.boosterConfig.GetSlowDownMultiplier;
 
 
         [Serializable]
@@ -24,7 +26,8 @@ namespace Codebase.Data
         [Serializable]
         private class Settings
         {
-            public SceneConfig sceneConfig;
+            public WorldConfig worldConfig;
+            public BoosterConfig boosterConfig;
         }
         
     }

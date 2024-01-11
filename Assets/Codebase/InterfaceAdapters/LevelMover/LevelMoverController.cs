@@ -1,4 +1,5 @@
-﻿using Codebase.InterfaceAdapters.LevelBuilder;
+﻿using Codebase.Data;
+using Codebase.InterfaceAdapters.LevelBuilder;
 using Codebase.Utilities;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -6,19 +7,30 @@ using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.LevelMover
 {
-    public class LevelMoverController : DisposableBase
+    public class LevelMoverController : DisposableBase, ILevelMover
     {
+        public float LevelMoveSpeed { get; set; }
+       
+
         private bool _isAlive = true;
         private readonly bool _worldIsMoving;
         private readonly ILevelBuilder _levelBuilder;
+        private readonly IContentProvider _iContentProvider;
         private Transform _lastPlatform;
 
-        public LevelMoverController(ILevelBuilder levelBuilder)
+        public LevelMoverController(ILevelBuilder levelBuilder, IContentProvider iContentProvider)
         {
+            _iContentProvider = iContentProvider;
             _levelBuilder = levelBuilder;
             _levelBuilder.LastSpawnedPlatform.Subscribe(AddPlatform).AddTo(_disposables);
             _worldIsMoving = true;
+            ResetMoveSpeed();
             WorldMover();
+        }
+        
+        public void ResetMoveSpeed()
+        {
+            LevelMoveSpeed = _iContentProvider.GetDefaultWorldSpeed();
         }
 
         private void AddPlatform(Transform platform)
@@ -34,7 +46,6 @@ namespace Codebase.InterfaceAdapters.LevelMover
             }
         }
         
-
         private async void WorldMover()
         {
             while (_isAlive)
@@ -43,7 +54,7 @@ namespace Codebase.InterfaceAdapters.LevelMover
                 {
                     foreach (var transform in _levelBuilder.PlatformsToMove)
                     {
-                        transform.Translate(-Vector3.right * Time.deltaTime * 6);
+                        transform.Translate(-Vector3.right * Time.deltaTime * LevelMoveSpeed);
                     }
                 }
                 await UniTask.Yield();
@@ -54,5 +65,7 @@ namespace Codebase.InterfaceAdapters.LevelMover
         {
             _isAlive = false;
         }
+
+       
     }
 }

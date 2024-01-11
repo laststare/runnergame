@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 namespace Codebase
 {
     public enum TriggerType
@@ -7,7 +6,8 @@ namespace Codebase
         SpeedUpCoin,
         SlowDownCoin,
         FlyCoin,
-        Obstacle
+        Obstacle,
+        None
     }
     
 }
