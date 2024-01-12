@@ -1,6 +1,7 @@
 ﻿using Codebase.Data;
 using Codebase.InterfaceAdapters.LevelMover;
 using Codebase.InterfaceAdapters.TriggerListener;
+using Codebase.InterfaceAdapters.Triggers;
 using Codebase.Utilities;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -21,31 +22,33 @@ namespace Codebase.InterfaceAdapters.Boosters
             
             iTriggerReaction.TriggerReaction.SubscribeWithSkip(x =>
             {
-                if (x == TriggerType.SpeedUpCoin)
+                if (x.TriggerType == TriggerType.SpeedUpCoin)
                     SpeedUpEffect(x);
             }).AddTo(_disposables);
             
             iTriggerReaction.TriggerReaction.SubscribeWithSkip(x =>
             {
-                if (x == TriggerType.SlowDownCoin)
+                if (x.TriggerType == TriggerType.SlowDownCoin)
                     SlowDownEffect(x);
             }).AddTo(_disposables);
         }
 
-        private void SpeedUpEffect(TriggerType triggerType)
+        private void SpeedUpEffect(ISceneTrigger iSceneTrigger)
         {
-            if (_iTriggerReaction.ActualTrigger == triggerType)
+            iSceneTrigger.GetTransform.gameObject.SetActive(false);
+            if (_iTriggerReaction.ActualTrigger == iSceneTrigger.TriggerType)
                 return;
-            _iTriggerReaction.ActualTrigger = triggerType;
+            _iTriggerReaction.ActualTrigger = iSceneTrigger.TriggerType;
             _iLevelMover.LevelMoveSpeed *= _iContentProvider.GetSpeedUpMultiplier();
             FinishEffect(_iContentProvider.GetDefaultEffectDuration());
         }
 
-        private void SlowDownEffect(TriggerType triggerType)
+        private void SlowDownEffect(ISceneTrigger iSceneTrigger)
         {
-            if (_iTriggerReaction.ActualTrigger == triggerType)
+            iSceneTrigger.GetTransform.gameObject.SetActive(false);
+            if (_iTriggerReaction.ActualTrigger == iSceneTrigger.TriggerType)
                 return;
-            _iTriggerReaction.ActualTrigger = triggerType;
+            _iTriggerReaction.ActualTrigger = iSceneTrigger.TriggerType;
             _iLevelMover.LevelMoveSpeed /= _iContentProvider.GetSlowDownMultiplier();
             FinishEffect(_iContentProvider.GetDefaultEffectDuration());
         }

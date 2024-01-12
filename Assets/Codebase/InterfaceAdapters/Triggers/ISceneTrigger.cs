@@ -4,6 +4,7 @@ namespace Codebase.InterfaceAdapters.Triggers
 {
     public interface ISceneTrigger : ITrigger
     {
-        event Action<TriggerType> OnTriggerAction;
+        TriggerType TriggerType { get;}
+        event Action<ISceneTrigger> OnTriggerAction;
     }
 }

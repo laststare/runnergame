@@ -8,12 +8,12 @@ namespace Codebase.InterfaceAdapters.TriggerListener
 {
     public class TriggerListenerController : DisposableBase, ITriggerReaction
     {
-        public ReactiveEvent<TriggerType> TriggerReaction { get; set; }
+        public ReactiveEvent<ISceneTrigger> TriggerReaction { get; set; }
         public TriggerType ActualTrigger { get; set; }
 
         public TriggerListenerController(ITriggerListener triggerListener)
         {
-            TriggerReaction = new ReactiveEvent<TriggerType>();
+            TriggerReaction = new ReactiveEvent<ISceneTrigger>();
             ActualTrigger = TriggerType.None;
             triggerListener.triggersToSubscribe.SubscribeWithSkip(SubsToTriggers).AddTo(_disposables);
             triggerListener.triggersToUnSubscribe.SubscribeWithSkip(UnSubsToTriggers).AddTo(_disposables);
@@ -31,6 +31,6 @@ namespace Codebase.InterfaceAdapters.TriggerListener
                 trigger.OnTriggerAction -= ListenToTrigger;
         }
 
-        private void ListenToTrigger(TriggerType triggerType) => TriggerReaction.Notify(triggerType);
+        private void ListenToTrigger(ISceneTrigger iSceneTrigger) => TriggerReaction.Notify(iSceneTrigger);
     }
 }

@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 667ace5a66fb4de6810007d8de457233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  _triggerType: 0
 --- !u!1 &1211747015
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 667ace5a66fb4de6810007d8de457233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 1
+  _triggerType: 1
 --- !u!1 &1363787661
 GameObject:
   m_ObjectHideFlags: 0
