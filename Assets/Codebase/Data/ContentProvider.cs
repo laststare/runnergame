@@ -15,6 +15,7 @@ namespace Codebase.Data
         public float GetDefaultEffectDuration() => settings.boosterConfig.GetDefaultEffectDuration;
         public float GetSpeedUpMultiplier() => settings.boosterConfig.GetSpeedUpMultiplier;
         public float GetSlowDownMultiplier() => settings.boosterConfig.GetSlowDownMultiplier;
+        public float GetFlyHeight() => settings.boosterConfig.GetFlyHeight;
 
 
         [Serializable]

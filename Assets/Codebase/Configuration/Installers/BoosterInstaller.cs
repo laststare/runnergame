@@ -8,11 +8,19 @@ namespace Codebase.Configuration.Installers
         public override void InstallBindings()
         {
             InjectSpeedEffectBooster();
+            InjectFlyEffectBooster();
         }
         
         private void InjectSpeedEffectBooster()
         {
             Container.BindInterfacesAndSelfTo<SpeedEffectBooster>()
+                .AsSingle()
+                .NonLazy();
+        }
+        
+        private void InjectFlyEffectBooster()
+        {
+            Container.BindInterfacesAndSelfTo<FlyEffectBooster>()
                 .AsSingle()
                 .NonLazy();
         }

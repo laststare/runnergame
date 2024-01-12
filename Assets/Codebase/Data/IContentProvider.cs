@@ -9,5 +9,6 @@ namespace Codebase.Data
         public float GetDefaultEffectDuration();
         public float GetSpeedUpMultiplier();
         public float GetSlowDownMultiplier();
+        public float GetFlyHeight();
     }
 }

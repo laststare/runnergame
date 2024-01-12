@@ -1,5 +1,6 @@
 using Codebase.InterfaceAdapters.LevelBuilder;
 using Codebase.InterfaceAdapters.LevelMover;
+using Codebase.InterfaceAdapters.Runner;
 using Codebase.InterfaceAdapters.TriggerListener;
 using Zenject;
 
@@ -12,6 +13,7 @@ namespace Codebase.Configuration.Installers
             InjectLevelBuilder();
             InjectLevelMover();
             InjectTriggerListener();
+            InjectRunner();
         }
         
         private void InjectLevelBuilder()
@@ -34,6 +36,13 @@ namespace Codebase.Configuration.Installers
                 .AsSingle()
                 .NonLazy();
         }
-        
+
+        private void InjectRunner()
+        {
+            Container.BindInterfacesAndSelfTo<RunnerController>()
+                .AsSingle()
+                .NonLazy();
+        }
+
     }
 }
