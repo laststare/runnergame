@@ -3,12 +3,13 @@ using Zenject;
 
 namespace Codebase.Configuration.Installers
 {
-    public class BoosterInstaller : MonoInstaller
+    public class EffectInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
             InjectSpeedEffectBooster();
             InjectFlyEffectBooster();
+            InjectObstacleEffect();
         }
         
         private void InjectSpeedEffectBooster()
@@ -21,6 +22,13 @@ namespace Codebase.Configuration.Installers
         private void InjectFlyEffectBooster()
         {
             Container.BindInterfacesAndSelfTo<FlyEffectBooster>()
+                .AsSingle()
+                .NonLazy();
+        }
+        
+        private void InjectObstacleEffect()
+        {
+            Container.BindInterfacesAndSelfTo<ObstacleEffect>()
                 .AsSingle()
                 .NonLazy();
         }

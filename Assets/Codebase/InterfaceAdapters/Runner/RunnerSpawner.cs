@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.Runner
 {
-    public class RunnerController : DisposableBase, IRunner
+    public class RunnerSpawner : DisposableBase, IRunner
     {
         private readonly IContentProvider _iContentProvider;
         private Transform _runner;
         public Transform RunnerTransform => _runner;
         
-        public RunnerController(IContentProvider iContentProvider)
+        public RunnerSpawner(IContentProvider iContentProvider)
         {
             _iContentProvider = iContentProvider;
             SpawnRunner();

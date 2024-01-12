@@ -4,7 +4,6 @@
     {
         float LevelMoveSpeed { get; set; }
         void ResetMoveSpeed();
-        
-        
+        void StopMoving();
     }
 }

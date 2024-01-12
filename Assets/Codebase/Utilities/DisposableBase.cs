@@ -5,6 +5,7 @@ namespace Codebase.Utilities
 {
     public class DisposableBase : IDisposable
     {
+        protected bool IsAlive = true;
         protected readonly List<IDisposable> _disposables = new List<IDisposable>();
         
         public void Dispose()
@@ -19,7 +20,7 @@ namespace Codebase.Utilities
         
         protected virtual void OnDispose()
         {
-            
+            IsAlive = false;
         }
     }
 }

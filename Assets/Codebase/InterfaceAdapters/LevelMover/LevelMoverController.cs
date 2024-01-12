@@ -10,9 +10,7 @@ namespace Codebase.InterfaceAdapters.LevelMover
     public class LevelMoverController : DisposableBase, ILevelMover
     {
         public float LevelMoveSpeed { get; set; }
-       
-
-        private bool _isAlive = true;
+        
         private readonly bool _worldIsMoving;
         private readonly ILevelBuilder _levelBuilder;
         private readonly IContentProvider _iContentProvider;
@@ -28,10 +26,9 @@ namespace Codebase.InterfaceAdapters.LevelMover
             WorldMover();
         }
         
-        public void ResetMoveSpeed()
-        {
-            LevelMoveSpeed = _iContentProvider.GetDefaultWorldSpeed();
-        }
+        public void ResetMoveSpeed() => LevelMoveSpeed = _iContentProvider.GetDefaultWorldSpeed();
+
+        public void StopMoving() => LevelMoveSpeed = 0;
 
         private void AddPlatform(Transform platform)
         {
@@ -48,7 +45,7 @@ namespace Codebase.InterfaceAdapters.LevelMover
         
         private async void WorldMover()
         {
-            while (_isAlive)
+            while (IsAlive)
             {
                 if (_worldIsMoving)
                 {
@@ -60,12 +57,6 @@ namespace Codebase.InterfaceAdapters.LevelMover
                 await UniTask.Yield();
             }
         }
-        
-        protected override void OnDispose()
-        {
-            _isAlive = false;
-        }
 
-       
     }
 }
