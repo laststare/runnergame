@@ -8,7 +8,7 @@ using DG.Tweening;
 using UniRx;
 using UnityEngine;
 
-namespace Codebase.InterfaceAdapters.Boosters
+namespace Codebase.InterfaceAdapters.Effects
 {
     public class FlyEffectBooster :  DisposableBase
     {
@@ -16,7 +16,7 @@ namespace Codebase.InterfaceAdapters.Boosters
         private readonly IContentProvider _iContentProvider;
         private readonly ITriggerReaction _iTriggerReaction;
 
-        public FlyEffectBooster(ITriggerReaction iTriggerReaction, IRunner iRunner ,IContentProvider iContentProvider)
+        public FlyEffectBooster(ITriggerReaction iTriggerReaction, IRunner iRunner, IContentProvider iContentProvider)
         {
             _iRunner = iRunner;
             _iContentProvider = iContentProvider;

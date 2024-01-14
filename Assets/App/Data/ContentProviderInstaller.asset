@@ -20,3 +20,4 @@ MonoBehaviour:
       boosterConfig: {fileID: 11400000, guid: e499f5a9e541d4e4795f7a13bda55e85, type: 2}
     uiViews:
       jumpButtonView: {fileID: 6129999601458541570, guid: 981da219398284aa98867f6ac071c526, type: 3}
+      mainMenuView: {fileID: -6355426664270301472, guid: ef9d96ec8883440edb8d0e0bb9c81a1c, type: 3}

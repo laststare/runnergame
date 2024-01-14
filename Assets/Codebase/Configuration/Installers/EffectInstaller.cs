@@ -1,4 +1,4 @@
-﻿using Codebase.InterfaceAdapters.Boosters;
+﻿using Codebase.InterfaceAdapters.Effects;
 using Zenject;
 
 namespace Codebase.Configuration.Installers

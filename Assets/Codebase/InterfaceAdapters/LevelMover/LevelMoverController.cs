@@ -1,4 +1,5 @@
 ﻿using Codebase.Data;
+using Codebase.InterfaceAdapters.GameState;
 using Codebase.InterfaceAdapters.LevelBuilder;
 using Codebase.Utilities;
 using Cysharp.Threading.Tasks;
@@ -11,18 +12,20 @@ namespace Codebase.InterfaceAdapters.LevelMover
     {
         public float LevelMoveSpeed { get; set; }
         
-        private readonly bool _worldIsMoving;
         private readonly ILevelBuilder _levelBuilder;
         private readonly IContentProvider _iContentProvider;
         private Transform _lastPlatform;
 
-        public LevelMoverController(ILevelBuilder levelBuilder, IContentProvider iContentProvider)
+        public LevelMoverController(ILevelBuilder levelBuilder, IContentProvider iContentProvider, IGameplayState iGameplayState)
         {
             _iContentProvider = iContentProvider;
             _levelBuilder = levelBuilder;
             _levelBuilder.LastSpawnedPlatform.Subscribe(AddPlatform).AddTo(_disposables);
-            _worldIsMoving = true;
-            ResetMoveSpeed();
+            iGameplayState.CurrentGameState.Subscribe(x =>
+            {
+                if (x == GameplayState.Gameplay)
+                    ResetMoveSpeed();
+            }).AddTo(_disposables);
             WorldMover();
         }
         
@@ -47,12 +50,9 @@ namespace Codebase.InterfaceAdapters.LevelMover
         {
             while (IsAlive)
             {
-                if (_worldIsMoving)
+                foreach (var transform in _levelBuilder.PlatformsToMove)
                 {
-                    foreach (var transform in _levelBuilder.PlatformsToMove)
-                    {
-                        transform.Translate(-Vector3.right * Time.deltaTime * LevelMoveSpeed);
-                    }
+                    transform.Translate(-Vector3.right * Time.deltaTime * LevelMoveSpeed);
                 }
                 await UniTask.Yield();
             }

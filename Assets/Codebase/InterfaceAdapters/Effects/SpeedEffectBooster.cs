@@ -6,7 +6,7 @@ using Codebase.Utilities;
 using Cysharp.Threading.Tasks;
 using UniRx;
 
-namespace Codebase.InterfaceAdapters.Boosters
+namespace Codebase.InterfaceAdapters.Effects
 {
     public class SpeedEffectBooster :  DisposableBase
     {

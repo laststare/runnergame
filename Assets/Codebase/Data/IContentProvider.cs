@@ -1,5 +1,6 @@
 ﻿using Codebase.InterfaceAdapters.UI;
 using Codebase.Views;
+using Codebase.Views.UI;
 using UnityEngine;
 
 namespace Codebase.Data
@@ -13,5 +14,6 @@ namespace Codebase.Data
         public float GetSlowDownMultiplier();
         public float GetFlyHeight();
         public JumpButtonView GetJumpButtonView();
+        public MainMenuView GetMainMenuView();
     }
 }

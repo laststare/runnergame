@@ -1,7 +1,7 @@
 ﻿
 namespace Codebase
 {
-    public enum GameState
+    public enum GameplayState
     {
         StartScreen,
         Gameplay, 

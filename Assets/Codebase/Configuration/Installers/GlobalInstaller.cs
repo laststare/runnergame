@@ -1,3 +1,4 @@
+using Codebase.InterfaceAdapters.GameState;
 using Codebase.InterfaceAdapters.LevelBuilder;
 using Codebase.InterfaceAdapters.LevelMover;
 using Codebase.InterfaceAdapters.TriggerListener;
@@ -9,9 +10,17 @@ namespace Codebase.Configuration.Installers
     {
         public override void InstallBindings()
         {
+            InjectGameStateController();
             InjectLevelBuilder();
             InjectLevelMover();
             InjectTriggerListener();
+        }
+        
+        private void InjectGameStateController()
+        {
+            Container.BindInterfacesAndSelfTo<GameplayStateController>()
+                .AsSingle()
+                .NonLazy();
         }
         
         private void InjectLevelBuilder()

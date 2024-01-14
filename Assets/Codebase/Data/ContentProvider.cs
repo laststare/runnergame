@@ -1,6 +1,5 @@
 ﻿using System;
-using Codebase.InterfaceAdapters.UI;
-using Codebase.Views;
+using Codebase.Views.UI;
 using UnityEngine;
 
 namespace Codebase.Data
@@ -20,11 +19,13 @@ namespace Codebase.Data
         public float GetSlowDownMultiplier() => settings.boosterConfig.GetSlowDownMultiplier;
         public float GetFlyHeight() => settings.boosterConfig.GetFlyHeight;
         public JumpButtonView GetJumpButtonView() => uiViews.jumpButtonView;
+        public MainMenuView GetMainMenuView() => uiViews.mainMenuView;
 
         [Serializable]
         private class UIViews
         {
             public JumpButtonView jumpButtonView;
+            public MainMenuView mainMenuView;
         }
 
         [Serializable]
