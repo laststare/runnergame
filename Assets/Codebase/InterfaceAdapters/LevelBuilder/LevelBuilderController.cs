@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Codebase.InterfaceAdapters.GameState;
 using Codebase.InterfaceAdapters.Triggers;
 using Codebase.Utilities;
 using Cysharp.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace Codebase.InterfaceAdapters.LevelBuilder
         private readonly Queue<SceneSet> _loadedSceneSets = new();
         private bool _isAlive = true;
 
-        protected LevelBuilderController()
+        protected LevelBuilderController(IGameplayState iGameplayState)
         {
             PlatformsToMove = new Queue<Transform>();
             LastSpawnedPlatform = new ReactiveProperty<Transform>();
@@ -28,6 +29,8 @@ namespace Codebase.InterfaceAdapters.LevelBuilder
             triggersToUnSubscribe = new ReactiveEvent<ISceneTrigger[]>();
   
             SceneManager.sceneLoaded += OnSceneLoaded;
+            
+            iGameplayState.RestartGame.Subscribe(Restart).AddTo(_disposables);
             
             LoadScene();
             CheckLastPlatformDistance();
@@ -79,6 +82,21 @@ namespace Codebase.InterfaceAdapters.LevelBuilder
                 }
                 await UniTask.Delay(1000);
             }
+        }
+
+        private void Restart()
+        {
+            PlatformsToMove.Clear();
+            
+            int i = _loadedSceneSets.Count;
+            while (i>0)
+            {
+                var sceneSet = _loadedSceneSets.Dequeue();
+                triggersToUnSubscribe.Notify(sceneSet.Triggers);
+                SceneManager.UnloadSceneAsync(sceneSet.scene);
+                i--;
+            }
+            LoadScene();
         }
 
         protected override void OnDispose()

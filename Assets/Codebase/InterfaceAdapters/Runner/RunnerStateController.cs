@@ -1,6 +1,7 @@
-using System;
+using Codebase.InterfaceAdapters.GameState;
 using Codebase.Utilities;
 using Cysharp.Threading.Tasks;
+using UniRx;
 using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.Runner
@@ -10,11 +11,16 @@ namespace Codebase.InterfaceAdapters.Runner
         public bool IsGrounded { get; set; }
         private readonly IRunner _iRunner;
         private readonly Rigidbody _rigidbody;
+        private Vector3 _startPosition;
         
-        public RunnerStateController(IRunner iRunner)
+        public RunnerStateController(IRunner iRunner, IGameplayState iGameplayState)
         {
             _iRunner = iRunner;
             _rigidbody = _iRunner.RunnerTransform.GetComponent<Rigidbody>();
+            _startPosition = _iRunner.RunnerTransform.position;
+            iGameplayState.RestartGame.Subscribe(() =>
+                iRunner.RunnerTransform.position = _startPosition).AddTo(_disposables);
+     
             VelocityController();
         }
         
