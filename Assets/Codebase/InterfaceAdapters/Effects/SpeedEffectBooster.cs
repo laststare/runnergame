@@ -12,14 +12,14 @@ namespace Codebase.InterfaceAdapters.Effects
     public class SpeedEffectBooster :  DisposableBase
     {
         private readonly ILevelMover _iLevelMover;
-        private readonly IContentProvider _iContentProvider;
+        private readonly ISettingsProvider _iSettingsProvider;
         private readonly ITriggerReaction _iTriggerReaction;
         private readonly IGameplayState _iGameplayState;
         
-        public SpeedEffectBooster(ITriggerReaction iTriggerReaction, ILevelMover iLevelMover, IContentProvider iContentProvider, IGameplayState iGameplayState)
+        public SpeedEffectBooster(ITriggerReaction iTriggerReaction, ILevelMover iLevelMover, ISettingsProvider iSettingsProvider, IGameplayState iGameplayState)
         {
             _iLevelMover = iLevelMover;
-            _iContentProvider = iContentProvider;
+            _iSettingsProvider = iSettingsProvider;
             _iTriggerReaction = iTriggerReaction;
             _iGameplayState = iGameplayState;
             
@@ -42,8 +42,8 @@ namespace Codebase.InterfaceAdapters.Effects
             if (_iTriggerReaction.ActualTrigger == iSceneTrigger.TriggerType)
                 return;
             _iTriggerReaction.ActualTrigger = iSceneTrigger.TriggerType;
-            _iLevelMover.LevelMoveSpeed *= _iContentProvider.GetSpeedUpMultiplier();
-            FinishEffect(_iContentProvider.GetDefaultEffectDuration());
+            _iLevelMover.LevelMoveSpeed *= _iSettingsProvider.GetSpeedUpMultiplier();
+            FinishEffect(_iSettingsProvider.GetDefaultEffectDuration());
         }
 
         private void SlowDownEffect(ISceneTrigger iSceneTrigger)
@@ -52,8 +52,8 @@ namespace Codebase.InterfaceAdapters.Effects
             if (_iTriggerReaction.ActualTrigger == iSceneTrigger.TriggerType)
                 return;
             _iTriggerReaction.ActualTrigger = iSceneTrigger.TriggerType;
-            _iLevelMover.LevelMoveSpeed /= _iContentProvider.GetSlowDownMultiplier();
-            FinishEffect(_iContentProvider.GetDefaultEffectDuration());
+            _iLevelMover.LevelMoveSpeed /= _iSettingsProvider.GetSlowDownMultiplier();
+            FinishEffect(_iSettingsProvider.GetDefaultEffectDuration());
         }
 
         private async void FinishEffect(float delay)

@@ -13,12 +13,12 @@ namespace Codebase.InterfaceAdapters.LevelMover
         
         public float LevelMoveSpeed { get; set; }
         private readonly ILevelBuilder _levelBuilder;
-        private readonly IContentProvider _iContentProvider;
+        private readonly ISettingsProvider _iSettingsProvider;
         private Transform _lastPlatform;
 
-        public LevelMoverController(ILevelBuilder levelBuilder, IContentProvider iContentProvider, IGameplayState iGameplayState)
+        public LevelMoverController(ILevelBuilder levelBuilder, ISettingsProvider iSettingsProvider, IGameplayState iGameplayState)
         {
-            _iContentProvider = iContentProvider;
+            _iSettingsProvider = iSettingsProvider;
             _levelBuilder = levelBuilder;
             _levelBuilder.LastSpawnedPlatform.Subscribe(AddPlatform).AddTo(_disposables);
             iGameplayState.CurrentGameState.Subscribe(x =>
@@ -29,7 +29,7 @@ namespace Codebase.InterfaceAdapters.LevelMover
             WorldMover();
         }
 
-        public void ResetMoveSpeed() => LevelMoveSpeed = _iContentProvider.GetDefaultWorldSpeed();
+        public void ResetMoveSpeed() => LevelMoveSpeed = _iSettingsProvider.GetDefaultWorldSpeed();
 
         public void StopMoving() => LevelMoveSpeed = 0;
 

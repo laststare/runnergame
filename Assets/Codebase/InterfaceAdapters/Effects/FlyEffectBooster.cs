@@ -13,14 +13,14 @@ namespace Codebase.InterfaceAdapters.Effects
     public class FlyEffectBooster :  DisposableBase
     {
         private readonly IRunner _iRunner;
-        private readonly IContentProvider _iContentProvider;
+        private readonly ISettingsProvider _iSettingsProvider;
         private readonly ITriggerReaction _iTriggerReaction;
         private readonly Rigidbody _rigidbody;
 
-        public FlyEffectBooster(ITriggerReaction iTriggerReaction, IRunner iRunner, IContentProvider iContentProvider)
+        public FlyEffectBooster(ITriggerReaction iTriggerReaction, IRunner iRunner, ISettingsProvider iSettingsProvider)
         {
             _iRunner = iRunner;
-            _iContentProvider = iContentProvider;
+            _iSettingsProvider = iSettingsProvider;
             _iTriggerReaction= iTriggerReaction;
             _rigidbody = _iRunner.RunnerTransform.GetComponent<Rigidbody>();
             iTriggerReaction.TriggerReaction.SubscribeWithSkip(x =>
@@ -40,8 +40,8 @@ namespace Codebase.InterfaceAdapters.Effects
             _rigidbody.useGravity = false;
             _rigidbody.isKinematic = true;
             
-            _iRunner.RunnerTransform.DOMoveY(_iContentProvider.GetFlyHeight(), 1f);
-            FinishEffect(_iContentProvider.GetDefaultEffectDuration());
+            _iRunner.RunnerTransform.DOMoveY(_iSettingsProvider.GetFlyHeight(), 1f);
+            FinishEffect(_iSettingsProvider.GetDefaultEffectDuration());
         }
         
         private async void FinishEffect(float delay)

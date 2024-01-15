@@ -9,15 +9,9 @@ namespace Codebase.Data
     {
    
         [SerializeField] private ScenePrefabs scenePrefs;
-        [SerializeField] private Settings settings;
         [SerializeField] private UIViews uiViews;
         
         public Transform GetRunner() => scenePrefs.runner;
-        public float GetDefaultWorldSpeed() => settings.worldConfig.GetDefaultWorldSpeed;
-        public float GetDefaultEffectDuration() => settings.boosterConfig.GetDefaultEffectDuration;
-        public float GetSpeedUpMultiplier() => settings.boosterConfig.GetSpeedUpMultiplier;
-        public float GetSlowDownMultiplier() => settings.boosterConfig.GetSlowDownMultiplier;
-        public float GetFlyHeight() => settings.boosterConfig.GetFlyHeight;
         public JumpButtonView GetJumpButtonView() => uiViews.jumpButtonView;
         public MainMenuView GetMainMenuView() => uiViews.mainMenuView;
 
@@ -34,12 +28,7 @@ namespace Codebase.Data
             public Transform runner;
         }
         
-        [Serializable]
-        private class Settings
-        {
-            public WorldConfig worldConfig;
-            public BoosterConfig boosterConfig;
-        }
+        
         
     }
 }
