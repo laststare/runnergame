@@ -10,6 +10,7 @@ namespace Codebase.Configuration.Installers
             InjectRunner();
             InjectRunnerJumpController();
             InjectRunnerStateController();
+            InjectRunnerAnimationController();
         }
         
         private void InjectRunner()
@@ -29,6 +30,13 @@ namespace Codebase.Configuration.Installers
         private void InjectRunnerStateController()
         {
             Container.BindInterfacesAndSelfTo<RunnerStateController>()
+                .AsSingle()
+                .NonLazy();
+        }
+        
+        private void InjectRunnerAnimationController()
+        {
+            Container.BindInterfacesAndSelfTo<RunnerAnimationController>()
                 .AsSingle()
                 .NonLazy();
         }

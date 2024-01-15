@@ -1,8 +1,10 @@
-﻿namespace Codebase.InterfaceAdapters.LevelMover
+﻿using UniRx;
+
+namespace Codebase.InterfaceAdapters.LevelMover
 {
     public interface ILevelMover
     {
-        float LevelMoveSpeed { get; set; }
+        ReactiveProperty<float> LevelMoveSpeed { get; set; }
         void ResetMoveSpeed();
         void StopMoving();
     }

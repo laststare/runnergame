@@ -39,7 +39,7 @@ namespace Codebase.InterfaceAdapters.Effects
             if (_iTriggerReaction.ActualTrigger == iSceneTrigger.TriggerType)
                 return;
             _iTriggerReaction.ActualTrigger = iSceneTrigger.TriggerType;
-            _iLevelMover.LevelMoveSpeed *= _iContentProvider.GetSpeedUpMultiplier();
+            _iLevelMover.LevelMoveSpeed.Value *= _iContentProvider.GetSpeedUpMultiplier();
             FinishEffect(_iContentProvider.GetDefaultEffectDuration());
         }
 
@@ -49,7 +49,7 @@ namespace Codebase.InterfaceAdapters.Effects
             if (_iTriggerReaction.ActualTrigger == iSceneTrigger.TriggerType)
                 return;
             _iTriggerReaction.ActualTrigger = iSceneTrigger.TriggerType;
-            _iLevelMover.LevelMoveSpeed /= _iContentProvider.GetSlowDownMultiplier();
+            _iLevelMover.LevelMoveSpeed.Value /= _iContentProvider.GetSlowDownMultiplier();
             FinishEffect(_iContentProvider.GetDefaultEffectDuration());
         }
 
