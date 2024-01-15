@@ -11,7 +11,7 @@ namespace Codebase.InterfaceAdapters.LevelMover
     public class LevelMoverController : DisposableBase, ILevelMover
     {
         
-        public ReactiveProperty<float> LevelMoveSpeed { get; set; } = new();
+        public float LevelMoveSpeed { get; set; }
         private readonly ILevelBuilder _levelBuilder;
         private readonly IContentProvider _iContentProvider;
         private Transform _lastPlatform;
@@ -29,9 +29,9 @@ namespace Codebase.InterfaceAdapters.LevelMover
             WorldMover();
         }
 
-        public void ResetMoveSpeed() => LevelMoveSpeed.Value = _iContentProvider.GetDefaultWorldSpeed();
+        public void ResetMoveSpeed() => LevelMoveSpeed = _iContentProvider.GetDefaultWorldSpeed();
 
-        public void StopMoving() => LevelMoveSpeed.Value = 0;
+        public void StopMoving() => LevelMoveSpeed = 0;
 
         private void AddPlatform(Transform platform)
         {
@@ -52,7 +52,7 @@ namespace Codebase.InterfaceAdapters.LevelMover
             {
                 foreach (var transform in _levelBuilder.PlatformsToMove)
                 {
-                    transform.Translate(-Vector3.right * Time.deltaTime * LevelMoveSpeed.Value);
+                    transform.Translate(-Vector3.right * Time.deltaTime * LevelMoveSpeed);
                 }
                 await UniTask.Yield();
             }

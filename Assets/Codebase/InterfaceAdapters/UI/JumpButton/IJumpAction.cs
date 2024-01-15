@@ -4,6 +4,6 @@ namespace Codebase.InterfaceAdapters.UI.JumpButton
 {
     public interface IJumpAction
     {
-        void Jump();
+        ReactiveTrigger Jump { get; set; }
     }
 }

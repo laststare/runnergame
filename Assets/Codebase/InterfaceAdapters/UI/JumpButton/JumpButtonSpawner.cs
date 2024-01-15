@@ -16,7 +16,7 @@ namespace Codebase.InterfaceAdapters.UI.JumpButton
                 jumpButtonViewModel.ShowJumpButton.Notify(x == GameplayState.Gameplay);
             }).AddTo(_disposables);
             
-            jumpButtonViewModel.JumpButtonPressed.Subscribe(() => iJumpAction.Jump()).AddTo(_disposables);
+            jumpButtonViewModel.JumpButtonPressed.Subscribe(() => iJumpAction.Jump.Notify()).AddTo(_disposables);
             
             var jumpButton = Object.Instantiate(iContentProvider.GetJumpButtonView(), uiRoot);
             jumpButton.Init(jumpButtonViewModel);

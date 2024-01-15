@@ -30,7 +30,7 @@ namespace Codebase.InterfaceAdapters.Runner
             {
                 if (IsAlive)
                 {
-                    IsGrounded = _rigidbody.velocity.y == 0;
+                    IsGrounded = _rigidbody.velocity.y == 0 && _rigidbody.useGravity;
                 }
                 await UniTask.Yield();
             }
