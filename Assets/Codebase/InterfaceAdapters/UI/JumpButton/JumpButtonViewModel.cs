@@ -4,7 +4,7 @@ namespace Codebase.InterfaceAdapters.UI.JumpButton
 {
     public class JumpButtonViewModel
     {
-        public ReactiveEvent<bool> ShowJumpButton = new ReactiveEvent<bool>();
-        public ReactiveTrigger JumpButtonPressed = new ReactiveTrigger();
+        public readonly ReactiveEvent<bool> ShowJumpButton = new ();
+        public readonly ReactiveTrigger JumpButtonPressed = new ();
     }
 }

@@ -36,22 +36,22 @@ namespace Codebase.InterfaceAdapters.Effects
             }).AddTo(_disposables);
         }
 
-        private void SpeedUpEffect(ISceneTrigger iSceneTrigger)
+        private void SpeedUpEffect(ITrigger iTrigger)
         {
-            iSceneTrigger.GetTransform.gameObject.SetActive(false);
-            if (_iTriggerReaction.ActualTrigger == iSceneTrigger.TriggerType)
+            iTrigger.GetTransform.gameObject.SetActive(false);
+            if (_iTriggerReaction.ActualTrigger == iTrigger.TriggerType)
                 return;
-            _iTriggerReaction.ActualTrigger = iSceneTrigger.TriggerType;
+            _iTriggerReaction.ActualTrigger = iTrigger.TriggerType;
             _iLevelMover.LevelMoveSpeed *= _iSettingsProvider.GetSpeedUpMultiplier();
             FinishEffect(_iSettingsProvider.GetDefaultEffectDuration());
         }
 
-        private void SlowDownEffect(ISceneTrigger iSceneTrigger)
+        private void SlowDownEffect(ITrigger iTrigger)
         {
-            iSceneTrigger.GetTransform.gameObject.SetActive(false);
-            if (_iTriggerReaction.ActualTrigger == iSceneTrigger.TriggerType)
+            iTrigger.GetTransform.gameObject.SetActive(false);
+            if (_iTriggerReaction.ActualTrigger == iTrigger.TriggerType)
                 return;
-            _iTriggerReaction.ActualTrigger = iSceneTrigger.TriggerType;
+            _iTriggerReaction.ActualTrigger = iTrigger.TriggerType;
             _iLevelMover.LevelMoveSpeed /= _iSettingsProvider.GetSlowDownMultiplier();
             FinishEffect(_iSettingsProvider.GetDefaultEffectDuration());
         }

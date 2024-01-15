@@ -6,7 +6,7 @@ namespace Codebase.Utilities
 {
     public class ViewBase : MonoBehaviour
     {
-        protected readonly List<IDisposable> _disposables = new List<IDisposable>();
+        protected readonly List<IDisposable> _disposables = new ();
 
         protected virtual void OnDestroy()
         {

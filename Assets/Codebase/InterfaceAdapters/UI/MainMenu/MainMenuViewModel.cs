@@ -4,9 +4,9 @@ namespace Codebase.InterfaceAdapters.UI.MainMenu
 {
     public class MainMenuViewModel
     {
-        public ReactiveTrigger PlayButtonPressed = new();
-        public ReactiveTrigger RestartButtonPressed = new();
-        public ReactiveTrigger HideAll = new();
-        public ReactiveTrigger ShowFinishScreen = new();
+        public readonly ReactiveTrigger PlayButtonPressed = new();
+        public readonly ReactiveTrigger RestartButtonPressed = new();
+        public readonly ReactiveTrigger HideAll = new();
+        public readonly ReactiveTrigger ShowFinishScreen = new();
     }
 }

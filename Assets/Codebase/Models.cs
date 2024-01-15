@@ -6,6 +6,6 @@ namespace Codebase
     public class SceneSet
     {
         public Scene scene;
-        public ISceneTrigger[] Triggers;
+        public ITrigger[] Triggers;
     }
 }

@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Codebase.Views
 {
-    public class SceneTrigger : Trigger, ISceneTrigger
+    public class Coin : Trigger, ITrigger
     {
         [SerializeField] private TriggerType _triggerType;
         public TriggerType TriggerType => _triggerType;
-        public event Action<ISceneTrigger> OnTriggerAction;
+        public event Action<ITrigger> OnTriggerAction;
 
         public Transform GetTransform => transform;
         

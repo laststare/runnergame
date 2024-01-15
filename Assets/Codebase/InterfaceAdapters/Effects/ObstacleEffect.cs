@@ -26,9 +26,9 @@ namespace Codebase.InterfaceAdapters.Effects
             }).AddTo(_disposables);
         }
 
-        private void Obstacle(ISceneTrigger iSceneTrigger)
+        private void Obstacle(ITrigger iTrigger)
         {
-            _iTriggerReaction.ActualTrigger = iSceneTrigger.TriggerType;
+            _iTriggerReaction.ActualTrigger = iTrigger.TriggerType;
             _iLevelMover.StopMoving();
             _iGameplayState.CurrentGameState.Value = GameplayState.FinishScreen;
         }

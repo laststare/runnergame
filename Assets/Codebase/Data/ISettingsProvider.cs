@@ -7,5 +7,6 @@
         public float GetSpeedUpMultiplier();
         public float GetSlowDownMultiplier();
         public float GetFlyHeight();
+        public float GetJumpStrength();
     }
 }

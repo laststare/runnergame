@@ -12,26 +12,18 @@ namespace Codebase.InterfaceAdapters.LevelBuilder
 {
     public class LevelBuilderController : DisposableBase, ILevelBuilder, ITriggerListener
     {
-        public Queue<Transform> PlatformsToMove { get; set; }
-        public ReactiveProperty<Transform> LastSpawnedPlatform { get; set; }
-        
-        public ReactiveEvent<ISceneTrigger[]> triggersToSubscribe { get; set; }
-        public ReactiveEvent<ISceneTrigger[]> triggersToUnSubscribe { get; set; }
+        public Queue<Transform> PlatformsToMove { get; set; } = new();
+        public ReactiveProperty<Transform> LastSpawnedPlatform { get; set; } = new();
+        public ReactiveEvent<ITrigger[]> triggersToSubscribe { get; } = new();
+        public ReactiveEvent<ITrigger[]> triggersToUnSubscribe { get; set; } = new();
         
         private readonly Queue<SceneSet> _loadedSceneSets = new();
         private bool _isAlive = true;
 
         protected LevelBuilderController(IGameplayState iGameplayState)
         {
-            PlatformsToMove = new Queue<Transform>();
-            LastSpawnedPlatform = new ReactiveProperty<Transform>();
-            triggersToSubscribe = new ReactiveEvent<ISceneTrigger[]>();
-            triggersToUnSubscribe = new ReactiveEvent<ISceneTrigger[]>();
-  
             SceneManager.sceneLoaded += OnSceneLoaded;
-            
             iGameplayState.RestartGame.Subscribe(Restart).AddTo(_disposables);
-            
             LoadScene();
             CheckLastPlatformDistance();
         }
@@ -46,7 +38,7 @@ namespace Codebase.InterfaceAdapters.LevelBuilder
         {
             if(scene.buildIndex == 0) return;
             var sceneRootObject = scene.GetRootGameObjects()[0].transform;
-            var triggers = sceneRootObject.GetComponentsInChildren<ISceneTrigger>();
+            var triggers = sceneRootObject.GetComponentsInChildren<ITrigger>();
 
             _loadedSceneSets.Enqueue(new SceneSet()
             {
@@ -87,8 +79,7 @@ namespace Codebase.InterfaceAdapters.LevelBuilder
         private void Restart()
         {
             PlatformsToMove.Clear();
-            
-            int i = _loadedSceneSets.Count;
+            var i = _loadedSceneSets.Count;
             while (i>0)
             {
                 var sceneSet = _loadedSceneSets.Dequeue();
@@ -104,7 +95,6 @@ namespace Codebase.InterfaceAdapters.LevelBuilder
             base.OnDispose();
             _isAlive = false;
         }
-
-       
+        
     }
 }

@@ -10,7 +10,7 @@ namespace Codebase.InterfaceAdapters.Runner
     public class RunnerAnimationController : DisposableBase
     {
         private readonly Animator _animator; 
-        private Rigidbody _rigidbody;
+        private readonly Rigidbody _rigidbody;
         private readonly IRunnerState _iRunnerState;
         private readonly ILevelMover _iLevelMover;
         private static readonly int Speed = Animator.StringToHash("Speed");
@@ -28,28 +28,22 @@ namespace Codebase.InterfaceAdapters.Runner
             Run();
         }
         
-
         private async void Run()
         {
-            while (true)
+            while (IsAlive)
             {
-                if (IsAlive)
-                {
-                    _animator.SetFloat(Speed, _iLevelMover.LevelMoveSpeed * 5);
-                    _animator.SetBool(Grounded, _iRunnerState.IsGrounded);
-                    _animator.SetBool(FreeFall, !_rigidbody.useGravity);
-                }
+                _animator.SetFloat(Speed, _iLevelMover.LevelMoveSpeed * 5);
+                _animator.SetBool(Grounded, _iRunnerState.IsGrounded);
+                _animator.SetBool(FreeFall, !_rigidbody.useGravity);
                 await UniTask.Yield();
             }
         }
         
-
         private async void JumpAnimation()
         {
             _animator.SetTrigger(Jump);
             await UniTask.WaitForEndOfFrame();
             _animator.ResetTrigger(Jump);
-            
         }
     }
 }

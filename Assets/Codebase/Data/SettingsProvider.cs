@@ -12,6 +12,7 @@ namespace Codebase.Data
         {
             public WorldConfig worldConfig;
             public BoosterConfig boosterConfig;
+            public RunnerConfig runnerConfig;
         }
         [SerializeField] 
         private Settings settings;
@@ -21,6 +22,6 @@ namespace Codebase.Data
         public float GetSpeedUpMultiplier() => settings.boosterConfig.GetSpeedUpMultiplier;
         public float GetSlowDownMultiplier() => settings.boosterConfig.GetSlowDownMultiplier;
         public float GetFlyHeight() => settings.boosterConfig.GetFlyHeight;
-
+        public float GetJumpStrength() => settings.runnerConfig.GetJumpStrength();
     }
 }

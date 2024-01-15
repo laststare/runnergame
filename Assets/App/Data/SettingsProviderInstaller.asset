@@ -16,3 +16,4 @@ MonoBehaviour:
     settings:
       worldConfig: {fileID: 11400000, guid: b5cc70821bfaaee45ad08cd3047c0a27, type: 2}
       boosterConfig: {fileID: 11400000, guid: e499f5a9e541d4e4795f7a13bda55e85, type: 2}
+      runnerConfig: {fileID: 11400000, guid: d77cbfcafed5f2c4d826418a811cf904, type: 2}

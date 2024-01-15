@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
 
 namespace Codebase.InterfaceAdapters.Triggers
 {
-    public interface ITrigger
+    public interface ITrigger : ISceneObject
     {
-        Transform GetTransform { get; }
+        TriggerType TriggerType { get;}
+        event Action<ITrigger> OnTriggerAction;
     }
 }

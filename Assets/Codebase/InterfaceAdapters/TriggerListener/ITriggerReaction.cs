@@ -5,7 +5,7 @@ namespace Codebase.InterfaceAdapters.TriggerListener
 {
     public interface ITriggerReaction
     {
-        public ReactiveEvent<ISceneTrigger> TriggerReaction { get; set; }
+        public ReactiveEvent<ITrigger> TriggerReaction { get; }
         
         public TriggerType ActualTrigger { get; set; }
     }

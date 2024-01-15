@@ -23,6 +23,7 @@ namespace Codebase.InterfaceAdapters.Effects
             _iSettingsProvider = iSettingsProvider;
             _iTriggerReaction= iTriggerReaction;
             _rigidbody = _iRunner.RunnerTransform.GetComponent<Rigidbody>();
+            
             iTriggerReaction.TriggerReaction.SubscribeWithSkip(x =>
             {
                 if (x.TriggerType == TriggerType.FlyCoin)
@@ -30,12 +31,12 @@ namespace Codebase.InterfaceAdapters.Effects
             }).AddTo(_disposables);
         }
 
-        private void FlyEffect(ISceneTrigger iSceneTrigger)
+        private void FlyEffect(ITrigger iTrigger)
         {
-            iSceneTrigger.GetTransform.gameObject.SetActive(false);
-            if (_iTriggerReaction.ActualTrigger == iSceneTrigger.TriggerType)
+            iTrigger.GetTransform.gameObject.SetActive(false);
+            if (_iTriggerReaction.ActualTrigger == iTrigger.TriggerType)
                 return;
-            _iTriggerReaction.ActualTrigger = iSceneTrigger.TriggerType;
+            _iTriggerReaction.ActualTrigger = iTrigger.TriggerType;
            
             _rigidbody.useGravity = false;
             _rigidbody.isKinematic = true;
