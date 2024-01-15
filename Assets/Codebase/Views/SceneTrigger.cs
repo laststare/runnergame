@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Codebase.Views
 {
-    public class SceneTriggerTrigger : Trigger, ISceneTrigger
+    public class SceneTrigger : Trigger, ISceneTrigger
     {
         [SerializeField] private TriggerType _triggerType;
         public TriggerType TriggerType => _triggerType;

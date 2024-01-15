@@ -15,13 +15,14 @@ namespace Codebase.InterfaceAdapters.Effects
         private readonly IRunner _iRunner;
         private readonly IContentProvider _iContentProvider;
         private readonly ITriggerReaction _iTriggerReaction;
+        private readonly Rigidbody _rigidbody;
 
         public FlyEffectBooster(ITriggerReaction iTriggerReaction, IRunner iRunner, IContentProvider iContentProvider)
         {
             _iRunner = iRunner;
             _iContentProvider = iContentProvider;
             _iTriggerReaction= iTriggerReaction;
-            
+            _rigidbody = _iRunner.RunnerTransform.GetComponent<Rigidbody>();
             iTriggerReaction.TriggerReaction.SubscribeWithSkip(x =>
             {
                 if (x.TriggerType == TriggerType.FlyCoin)
@@ -35,7 +36,10 @@ namespace Codebase.InterfaceAdapters.Effects
             if (_iTriggerReaction.ActualTrigger == iSceneTrigger.TriggerType)
                 return;
             _iTriggerReaction.ActualTrigger = iSceneTrigger.TriggerType;
-            _iRunner.RunnerTransform.GetComponent<Rigidbody>().useGravity = false;
+           
+            _rigidbody.useGravity = false;
+            _rigidbody.isKinematic = true;
+            
             _iRunner.RunnerTransform.DOMoveY(_iContentProvider.GetFlyHeight(), 1f);
             FinishEffect(_iContentProvider.GetDefaultEffectDuration());
         }
@@ -46,8 +50,10 @@ namespace Codebase.InterfaceAdapters.Effects
             await UniTask.Delay((int)delay);
             _iRunner.RunnerTransform.DOMoveY(0, 1f).OnComplete(() =>
             {
-                _iRunner.RunnerTransform.GetComponent<Rigidbody>().useGravity = true;
+                _rigidbody.useGravity = true;
+                _rigidbody.isKinematic = false;
             });
+            _iTriggerReaction.ActualTrigger = TriggerType.None;
         }
     }
 }

@@ -21,8 +21,8 @@ namespace Codebase.InterfaceAdapters.Runner
 
         private void JumpPlayerUp()
         {
-            if (_irRunnerState.IsGrounded)
-                _rigidbody.AddForce(Vector3.up * 11f, ForceMode.Impulse);
+            if (!_irRunnerState.IsGrounded)return; 
+            _rigidbody.AddForce(Vector3.up * 10f, ForceMode.VelocityChange);
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using Codebase.Data;
+using Codebase.InterfaceAdapters.GameState;
 using Codebase.InterfaceAdapters.LevelMover;
 using Codebase.InterfaceAdapters.TriggerListener;
 using Codebase.InterfaceAdapters.Triggers;
@@ -13,12 +14,14 @@ namespace Codebase.InterfaceAdapters.Effects
         private readonly ILevelMover _iLevelMover;
         private readonly IContentProvider _iContentProvider;
         private readonly ITriggerReaction _iTriggerReaction;
+        private readonly IGameplayState _iGameplayState;
         
-        public SpeedEffectBooster(ITriggerReaction iTriggerReaction, ILevelMover iLevelMover, IContentProvider iContentProvider)
+        public SpeedEffectBooster(ITriggerReaction iTriggerReaction, ILevelMover iLevelMover, IContentProvider iContentProvider, IGameplayState iGameplayState)
         {
             _iLevelMover = iLevelMover;
             _iContentProvider = iContentProvider;
             _iTriggerReaction = iTriggerReaction;
+            _iGameplayState = iGameplayState;
             
             iTriggerReaction.TriggerReaction.SubscribeWithSkip(x =>
             {
@@ -57,7 +60,9 @@ namespace Codebase.InterfaceAdapters.Effects
         {
             delay *= 1000;
             await UniTask.Delay((int)delay);
-            _iLevelMover.ResetMoveSpeed();
+            _iTriggerReaction.ActualTrigger = TriggerType.None;
+            if(_iGameplayState.CurrentGameState.Value == GameplayState.Gameplay)
+                _iLevelMover.ResetMoveSpeed();
         }
     }
 }
