@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.UI.MainMenu
 {
+    /// <summary>
+    /// Контроллер спавна основного меню игры
+    /// Взаимодействие с ui элементом через ViewModel
+    /// </summary>
     public class MainMenuSpawner : DisposableBase
     {
         public MainMenuSpawner(IContentProvider iContentProvider, Transform uiRoot, 

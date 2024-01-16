@@ -4,10 +4,14 @@ using UnityEngine;
 
 namespace Codebase.Data
 {
+    /// <summary>
+    /// Провайдера префабов игровых объектов
+    /// и пользовательских интерфейсов
+    /// </summary>
     [Serializable]
     public class ContentProvider: IContentProvider
     {
-   
+        
         [SerializeField] private ScenePrefabs scenePrefs;
         [SerializeField] private UIViews uiViews;
         

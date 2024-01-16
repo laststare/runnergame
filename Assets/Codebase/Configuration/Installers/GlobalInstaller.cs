@@ -6,6 +6,9 @@ using Zenject;
 
 namespace Codebase.Configuration.Installers
 {
+    /// <summary>
+    /// Базовый инсталлер, обеспечивающий работу игрового мира
+    /// </summary>
     public class GlobalInstaller : MonoInstaller
     {
         public override void InstallBindings()

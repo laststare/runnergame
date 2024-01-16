@@ -9,6 +9,11 @@ using UniRx;
 
 namespace Codebase.InterfaceAdapters.Effects
 {
+    /// <summary>
+    /// Контроллер эффектов изменения скорости
+    /// Регулирует эффекты ускорения и замедления через изменение скорости движения платформ
+    /// Суммируется только сила разных эффектов
+    /// </summary>
     public class SpeedEffectBooster :  DisposableBase
     {
         private readonly ILevelMover _iLevelMover;
@@ -36,6 +41,11 @@ namespace Codebase.InterfaceAdapters.Effects
             }).AddTo(_disposables);
         }
 
+        /// <summary>
+        /// Ускорение
+        /// Если игрок уже имеет этот эффект, действие пропускается
+        /// </summary>
+        /// <param name="iTrigger"></param>
         private void SpeedUpEffect(ITrigger iTrigger)
         {
             iTrigger.GetTransform.gameObject.SetActive(false);
@@ -43,9 +53,14 @@ namespace Codebase.InterfaceAdapters.Effects
                 return;
             _iTriggerReaction.ActualTrigger = iTrigger.TriggerType;
             _iLevelMover.LevelMoveSpeed *= _iSettingsProvider.GetSpeedUpMultiplier();
-            FinishEffect(_iSettingsProvider.GetDefaultEffectDuration());
+            FinishEffect(_iSettingsProvider.GetDefaultEffectDuration(), iTrigger.TriggerType);
         }
 
+        /// <summary>
+        /// Замедление
+        /// Если игрок уже имеет этот эффект, действие пропускается
+        /// </summary>
+        /// <param name="iTrigger"></param>
         private void SlowDownEffect(ITrigger iTrigger)
         {
             iTrigger.GetTransform.gameObject.SetActive(false);
@@ -53,14 +68,19 @@ namespace Codebase.InterfaceAdapters.Effects
                 return;
             _iTriggerReaction.ActualTrigger = iTrigger.TriggerType;
             _iLevelMover.LevelMoveSpeed /= _iSettingsProvider.GetSlowDownMultiplier();
-            FinishEffect(_iSettingsProvider.GetDefaultEffectDuration());
+            FinishEffect(_iSettingsProvider.GetDefaultEffectDuration(), iTrigger.TriggerType);
         }
 
-        private async void FinishEffect(float delay)
+        /// <summary>
+        /// Сброс силы и типа актуального эффекта после задержки
+        /// </summary>
+        /// <param name="delay"></param>
+        private async void FinishEffect(float delay, TriggerType triggerType)
         {
             delay *= 1000;
             await UniTask.Delay((int)delay);
-            _iTriggerReaction.ActualTrigger = TriggerType.None;
+            if (_iTriggerReaction.ActualTrigger == triggerType)     
+                _iTriggerReaction.ActualTrigger = TriggerType.None;
             if(_iGameplayState.CurrentGameState.Value == GameplayState.Gameplay)
                 _iLevelMover.ResetMoveSpeed();
         }

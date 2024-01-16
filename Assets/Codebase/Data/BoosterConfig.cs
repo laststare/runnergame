@@ -2,6 +2,9 @@
 
 namespace Codebase.Data
 {
+    /// <summary>
+    /// Конфиг с настройками эффектов, влияющих на перемещение персонажа
+    /// </summary>
     [CreateAssetMenu(fileName = "BoosterConfig", menuName = "GameData/BoosterConfig")]
     public class BoosterConfig : ScriptableObject
     {

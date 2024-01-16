@@ -1,10 +1,11 @@
-﻿using Codebase.InterfaceAdapters.UI;
-using Codebase.Views;
-using Codebase.Views.UI;
+﻿using Codebase.Views.UI;
 using UnityEngine;
 
 namespace Codebase.Data
 {
+    /// <summary>
+    /// Интерфейс для получения префабов на сцену
+    /// </summary>
     public interface IContentProvider
     {
         public Transform GetRunner();

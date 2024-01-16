@@ -7,6 +7,10 @@ using UniRx;
 
 namespace Codebase.InterfaceAdapters.Effects
 {
+    /// <summary>
+    /// Контроллер эффектов препятствий
+    /// Переводит игру в режим финального экрана
+    /// </summary>
     public class ObstacleEffect : DisposableBase
     {
         private readonly ILevelMover _iLevelMover;

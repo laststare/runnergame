@@ -2,6 +2,9 @@
 
 namespace Codebase.Data
 {
+    /// <summary>
+    /// Конфиг с настройками персонажа
+    /// </summary>
     [CreateAssetMenu(fileName = "RunnerConfig", menuName = "GameData/RunnerConfig")]
     public class RunnerConfig : ScriptableObject
     {

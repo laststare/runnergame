@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.Runner
 {
+    /// <summary>
+    /// Контроллер состояния персонажа
+    /// Непрерывная проверка состояния полёта/приземлённости персонажа
+    /// </summary>
     public class RunnerStateController : DisposableBase, IRunnerState
     {
         public bool IsGrounded { get; set; }

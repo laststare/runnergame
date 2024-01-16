@@ -3,6 +3,10 @@ using Zenject;
 
 namespace Codebase.Configuration.Installers
 {
+    /// <summary>
+    /// Инсталлер персонажа, отвечает за спав, анимации
+    /// и реакцию на пользовательский ввод
+    /// </summary>
     public class RunnerInstaller : MonoInstaller
     {
         public override void InstallBindings()

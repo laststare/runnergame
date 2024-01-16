@@ -5,6 +5,9 @@ using Zenject;
 
 namespace Codebase.Configuration.Installers
 {
+    /// <summary>
+    /// Инсталлер для контроллеров пользовательского интерфейса
+    /// </summary>
     public class UInstaller : MonoInstaller
     {
         [SerializeField] private Transform uiRoot;

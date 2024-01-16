@@ -7,6 +7,10 @@ using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.Runner
 {
+    /// <summary>
+    /// Контроллер управления анимациями персонажа
+    /// (реализован довольно примитивно ввиду экономии времени)
+    /// </summary>
     public class RunnerAnimationController : DisposableBase
     {
         private readonly Animator _animator; 
@@ -28,6 +32,9 @@ namespace Codebase.InterfaceAdapters.Runner
             Run();
         }
         
+        /// <summary>
+        /// Смешение анимаций бега и полёта
+        /// </summary>
         private async void Run()
         {
             while (IsAlive)
@@ -39,6 +46,9 @@ namespace Codebase.InterfaceAdapters.Runner
             }
         }
         
+        /// <summary>
+        /// Анимация прыжка
+        /// </summary>
         private async void JumpAnimation()
         {
             _animator.SetTrigger(Jump);

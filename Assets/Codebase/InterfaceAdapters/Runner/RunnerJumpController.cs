@@ -7,6 +7,10 @@ using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.Runner
 {
+    /// <summary>
+    /// Контроллер прыжка персонажа
+    /// Реализует прыжок при команде от пользовательского ввода
+    /// </summary>
     public class RunnerJumpController : DisposableBase, IJumpAction
     {
         public ReactiveTrigger Jump { get; set; } = new();

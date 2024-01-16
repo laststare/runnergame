@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 namespace Codebase.Views.UI
 {
+    /// <summary>
+    /// View ui кнопки прыжка
+    /// </summary>
     public class JumpButtonView : ViewBase
     {
         public void Init(JumpButtonViewModel viewModel)

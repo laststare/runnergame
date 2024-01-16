@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 namespace Codebase.Views.UI
 {
+    /// <summary>
+    /// View основного меню
+    /// Функционала очень мало, по этому поместил всё в один класс
+    /// В полнеуонной игре должно быть деления на отдельные элементы со своими view
+    /// </summary>
     public class MainMenuView : ViewBase
     {
         [SerializeField] private Button playButton, restartButton;

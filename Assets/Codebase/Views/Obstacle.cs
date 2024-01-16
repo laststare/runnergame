@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Codebase.Views
 {
+    /// <summary>
+    /// Класс препятствия (view)
+    /// Имплементирует интерфейс ITrigger для обнаружения после загрузги сцены
+    /// </summary>
     public class Obstacle : Trigger, ITrigger
     {
         [SerializeField] private TriggerType triggerType;

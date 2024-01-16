@@ -1,5 +1,8 @@
 ﻿namespace Codebase.Data
 {
+    /// <summary>
+    /// Интерфейс для получения настроек игрового мира
+    /// </summary>
     public interface ISettingsProvider
     {
         public float GetDefaultWorldSpeed();

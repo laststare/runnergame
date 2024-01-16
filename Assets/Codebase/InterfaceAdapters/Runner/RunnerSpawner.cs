@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.Runner
 {
+    /// <summary>
+    /// Спавн персонажа на сцене
+    /// </summary>
     public class RunnerSpawner : DisposableBase, IRunner
     {
         private readonly IContentProvider _iContentProvider;

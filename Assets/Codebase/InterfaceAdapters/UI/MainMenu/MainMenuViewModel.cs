@@ -2,6 +2,10 @@ using External.Reactive;
 
 namespace Codebase.InterfaceAdapters.UI.MainMenu
 {
+    /// <summary>
+    /// ViewModel основного меню
+    /// Взаимодействие через реактивные типы 
+    /// </summary>
     public class MainMenuViewModel
     {
         public readonly ReactiveTrigger PlayButtonPressed = new();

@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.UI.JumpButton
 {
+    /// <summary>
+    /// Контроллер спавна кнопки прыжка
+    /// Взаимодействие с ui элементом через ViewModel
+    /// </summary>
     public class JumpButtonSpawner : DisposableBase
     {
         public JumpButtonSpawner(IContentProvider iContentProvider, JumpButtonViewModel jumpButtonViewModel, 

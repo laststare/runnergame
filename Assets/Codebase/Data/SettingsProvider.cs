@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Codebase.Data
 {
+    /// <summary>
+    /// Провайдер настроек игрового мира
+    /// </summary>
     [Serializable]
     public class SettingsProvider : ISettingsProvider
     {

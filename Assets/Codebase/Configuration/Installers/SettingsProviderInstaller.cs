@@ -4,6 +4,9 @@ using Zenject;
 
 namespace Codebase.Configuration.Installers
 {
+    /// <summary>
+    /// Инсталлер для провайдера настроек игрового мира
+    /// </summary>
     [CreateAssetMenu(fileName = "SettingsProviderInstaller", menuName = "Installers/SettingsProviderInstaller")]
     public class SettingsProviderInstaller : ScriptableObjectInstaller<ContentProviderInstaller>
     {

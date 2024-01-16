@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace Codebase.Utilities
 {
+    /// <summary>
+    /// Родительский класс для Disposable классов (не MonoBehaviour)
+    /// со списком для подписи/отмены подписи реактивных типов
+    /// </summary>
     public class DisposableBase : IDisposable
     {
         protected bool IsAlive = true;

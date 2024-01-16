@@ -6,6 +6,9 @@ using UniRx;
 
 namespace Codebase.InterfaceAdapters.TriggerListener
 {
+    /// <summary>
+    /// Контроллер реализации подписки/отписки с триггерами на сцене
+    /// </summary>
     public class TriggerListenerController : DisposableBase, ITriggerReaction
     {
         public ReactiveEvent<ITrigger> TriggerReaction { get; } = new();

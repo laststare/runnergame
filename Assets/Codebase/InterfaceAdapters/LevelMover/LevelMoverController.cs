@@ -8,9 +8,13 @@ using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.LevelMover
 {
+    /// <summary>
+    /// Контроллер движения платформ
+    /// Получает платформы с подгруженных сцен
+    /// Осуществляет состыковку и движения платформ
+    /// </summary>
     public class LevelMoverController : DisposableBase, ILevelMover
     {
-        
         public float LevelMoveSpeed { get; set; }
         private readonly ILevelBuilder _levelBuilder;
         private readonly ISettingsProvider _iSettingsProvider;
@@ -29,10 +33,20 @@ namespace Codebase.InterfaceAdapters.LevelMover
             WorldMover();
         }
 
+        /// <summary>
+        /// Сброс скорости движения на дефолтную
+        /// </summary>
         public void ResetMoveSpeed() => LevelMoveSpeed = _iSettingsProvider.GetDefaultWorldSpeed();
 
+        /// <summary>
+        /// Остановка движения
+        /// </summary>
         public void StopMoving() => LevelMoveSpeed = 0;
 
+        /// <summary>
+        /// Добавление и состыковка новой платформы
+        /// </summary>
+        /// <param name="platform"></param>
         private void AddPlatform(Transform platform)
         {
             if(platform == null)return;
@@ -46,6 +60,9 @@ namespace Codebase.InterfaceAdapters.LevelMover
             }
         }
         
+        /// <summary>
+        /// Движение платформ по оси Х
+        /// </summary>
         private async void WorldMover()
         {
             while (IsAlive)

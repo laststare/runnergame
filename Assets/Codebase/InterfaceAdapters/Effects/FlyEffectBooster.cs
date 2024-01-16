@@ -10,6 +10,10 @@ using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.Effects
 {
+    /// <summary>
+    /// Контроллер эффекта полёта персонажа
+    /// Регулирует ввысоту и время полёта
+    /// </summary>
     public class FlyEffectBooster :  DisposableBase
     {
         private readonly IRunner _iRunner;
@@ -31,6 +35,11 @@ namespace Codebase.InterfaceAdapters.Effects
             }).AddTo(_disposables);
         }
 
+        /// <summary>
+        /// Подъём трансформа персонажа 
+        /// Если игрок уже имеет этот эффект, действие пропускается
+        /// </summary>
+        /// <param name="iTrigger"></param>
         private void FlyEffect(ITrigger iTrigger)
         {
             iTrigger.GetTransform.gameObject.SetActive(false);
@@ -42,10 +51,14 @@ namespace Codebase.InterfaceAdapters.Effects
             _rigidbody.isKinematic = true;
             
             _iRunner.RunnerTransform.DOMoveY(_iSettingsProvider.GetFlyHeight(), 1f);
-            FinishEffect(_iSettingsProvider.GetDefaultEffectDuration());
+            FinishEffect(_iSettingsProvider.GetDefaultEffectDuration(), iTrigger.TriggerType);
         }
         
-        private async void FinishEffect(float delay)
+        /// <summary>
+        /// Сброс силы и типа актуального эффекта после задержки
+        /// </summary>
+        /// <param name="delay"></param>
+        private async void FinishEffect(float delay, TriggerType triggerType)
         {
             delay *= 1000;
             await UniTask.Delay((int)delay);
@@ -53,8 +66,9 @@ namespace Codebase.InterfaceAdapters.Effects
             {
                 _rigidbody.useGravity = true;
                 _rigidbody.isKinematic = false;
+                if (_iTriggerReaction.ActualTrigger == triggerType)     
+                    _iTriggerReaction.ActualTrigger = TriggerType.None;
             });
-            _iTriggerReaction.ActualTrigger = TriggerType.None;
         }
     }
 }

@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Codebase.Views
 {
+    /// <summary>
+    /// Класс монеты (view)
+    /// Имплементирует интерфейс ITrigger для обнаружения после загрузги сцены
+    /// </summary>
     public class Coin : Trigger, ITrigger
     {
         [SerializeField] private TriggerType _triggerType;

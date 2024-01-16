@@ -4,9 +4,13 @@ using UnityEngine;
 
 namespace Codebase.InterfaceAdapters.LevelBuilder
 {
+    /// <summary>
+    /// Интерфейс загрузчика сцен
+    /// Отдаёт очередь платформ и последнюю полученную платформу
+    /// </summary>
     public interface ILevelBuilder
     {
-        Queue<Transform> PlatformsToMove { get; set; }
-        ReactiveProperty<Transform> LastSpawnedPlatform { get; set; }
+        Queue<Transform> PlatformsToMove { get; }
+        ReactiveProperty<Transform> LastSpawnedPlatform { get; }
     }
 }
